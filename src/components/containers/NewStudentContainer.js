@@ -19,7 +19,10 @@ class NewStudentContainer extends Component {
     super(props);
     this.state = {
       firstname: "", 
-      lastname: "", 
+      lastname: "",
+      email: "",
+      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/High_school_students%2C_SAS_Pudong.jpg/640px-High_school_students%2C_SAS_Pudong.jpg",
+      gpa: null, 
       campusId: null, 
       redirect: false, 
       redirectId: null
@@ -40,7 +43,10 @@ class NewStudentContainer extends Component {
     let student = {
         firstname: this.state.firstname,
         lastname: this.state.lastname,
-        campusId: this.state.campusId
+        email: this.state.email,
+        imageUrl: this.state.imageUrl,
+        gpa: this.state.gpa,
+        campusId: this.state.campusId,
     };
     
     // Add new student in back-end database
@@ -50,6 +56,9 @@ class NewStudentContainer extends Component {
     this.setState({
       firstname: "", 
       lastname: "", 
+      email: "",
+      imageUrl: "",
+      gpa: null,
       campusId: null, 
       redirect: true, 
       redirectId: newStudent.id
@@ -74,7 +83,7 @@ class NewStudentContainer extends Component {
         <Header />
         <NewStudentView 
           handleChange = {this.handleChange} 
-          handleSubmit={this.handleSubmit}      
+          handleSubmit = {this.handleSubmit}      
         />
       </div>          
     );

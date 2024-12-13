@@ -5,18 +5,36 @@ The Container component is responsible for stateful logic and data fetching, and
 passes data (if any) as props to the corresponding View component.
 If needed, it also defines the component's "connect" function.
 ================================================== */
-import Header from './Header';
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchCampusThunk } from "../../store/thunks";
-
+import { fetchCampusThunk, deleteCampusThunk, editCampusThunk, editStudentThunk } from "../../store/thunks";
 import { CampusView } from "../views";
+import Header from './Header';
 
 class CampusContainer extends Component {
+  // Initialize state
+  constructor(props){
+    super(props);
+    this.state = {
+      studentNotEnrolled: false 
+    };
+  }
   // Get the specific campus data from back-end database
   componentDidMount() {
     // Get campus ID from URL (API link)
     this.props.fetchCampus(this.props.match.params.id);
+  }
+
+  // Unenroll student by their ID
+  unenrollStudent = studentId => {
+    for (let i = 0; i < this.props.campus.students.length; i++) {
+      if (studentId === this.props.campus.students[i].id) {
+        this.props.campus.students[i].campusId = null;
+        this.props.editStudent(this.props.campus.students[i]);
+        this.props.campus.students.splice(i, 1);
+      }
+    }
+    this.setState({studentNotEnrolled: true});
   }
 
   // Render a Campus view by passing campus data as props to the corresponding View component
@@ -24,7 +42,13 @@ class CampusContainer extends Component {
     return (
       <div>
         <Header />
-        <CampusView campus={this.props.campus} />
+        <CampusView 
+          campus={this.props.campus}
+          deleteCampus={this.props.deleteCampus} 
+          editCampus={this.props.editCampus}
+          unenrollStudent={this.unenrollStudent}
+          studentNotEnrolled={this.state.studentNotEnrolled}
+        />
       </div>
     );
   }
@@ -43,6 +67,9 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
+    deleteCampus: (campusId) => dispatch(deleteCampusThunk(campusId)),
+    editCampus: (campus) => dispatch(editCampusThunk(campus)),
+    editStudent: (student) => dispatch(editStudentThunk(student))
   };
 };
 

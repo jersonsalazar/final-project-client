@@ -21,29 +21,26 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
     textAlign: 'left',
-    fontType: 'bold',
-    fontFamily: 'sans-serif', 
-    fontSize: '35px', 
+    fontWeight: 'bold',
+    fontFamily: 'sans-serif',
+    fontSize: '35px',
     color: 'darkblue'
   },
   appBar:{
     backgroundColor: '#fcb6bb',
-    shadows: ['none'],
-  },
-  greeting:{
-    display: 'flex',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    width: "50%",
-    margin: "auto",
+    boxShadow: 'none',
   },
   links:{
     textDecoration: 'none',
+  },
+  homeButton: {
+    marginRight: '10px',
+    //padding: '15px 25px',
+    //fontSize: '1.1rem'
   }
 }));
 
 // Header component, displayed on every page
-// Links to every other page
 const Header = () => {
   const classes = useStyles();
   return (
@@ -55,7 +52,7 @@ const Header = () => {
           </Typography>
 
           <Link className={classes.links} to={'/'} >
-            <Button variant="contained" color="primary" style={{marginRight: '10px'}}>
+            <Button className={classes.homeButton} variant="contained" color="primary">
               Home
             </Button>
           </Link>

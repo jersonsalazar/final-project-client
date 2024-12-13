@@ -9,73 +9,88 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 // Create styling for the input form
-const useStyles = makeStyles( () => ({
-  formContainer:{  
-    width: '500px',
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  formContainer: {
+    width: '80%',
+    maxWidth: '500px',
     backgroundColor: '#f0f0f5',
-    borderRadius: '5px',
-    margin: 'auto',
+    borderRadius: '8px',
+    padding: theme.spacing(3),
+    boxShadow: '0 3px 6px rgba(0,0,0,0.1)',
   },
-  title: {
-    flexGrow: 1,
-    textAlign: 'left',
-    textDecoration: 'none'
-  }, 
-  customizeAppBar:{
-    backgroundColor: '#11153e',
-    shadows: ['none'],
+  formTitle: {
+    backgroundColor: '#c5c8d6',
+    color: '#11153e',
+    padding: theme.spacing(1),
+    borderRadius: '5px 5px 0 0',
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(2),
   },
-  formTitle:{
-    backgroundColor:'#c5c8d6',
-    marginBottom: '15px',
-    textAlign: 'center',
-    borderRadius: '5px 5px 0px 0px',
-    padding: '3px'
+  label: {
+    color: '#11153e',
+    fontWeight: 'bold',
+    margin: theme.spacing(1, 0),
+  },
+  input: {
+    width: '100%',
+    padding: '10px',
+    margin: '5px 0 15px',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
+    '&:focus': {
+      borderColor: '#3f51b5',
+    },
+  },
+  buttonSubmit: {
+    marginTop: theme.spacing(2),
   },
 }));
 
 const NewStudentView = (props) => {
-  const {handleChange, handleSubmit } = props;
+  const { handleChange, handleSubmit } = props;
   const classes = useStyles();
 
   // Render a New Student view with an input form
   return (
-    <div>
-      <h1>New Student</h1>
+    <div className={classes.root}>
+      <Typography variant="h4">New Student</Typography>
 
-      <div className={classes.root}>
-        <div className={classes.formContainer}>
-          <div className={classes.formTitle}>
-            <Typography style={{fontWeight: 'bold', fontFamily: 'Courier, sans-serif', fontSize: '20px', color: '#11153e'}}>
-              Add a Student
-            </Typography>
-          </div>
-          <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
-            <label style= {{color:'#11153e', fontWeight: 'bold'}}>First Name: </label>
-            <input type="text" name="firstname" onChange ={(e) => handleChange(e)} />
-            <br/>
-            <br/>
+      <div className={classes.formContainer}>
+        <Typography className={classes.formTitle} variant="h6">
+          Add New Student
+        </Typography>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <label className={classes.label}>First Name:</label>
+          <input className={classes.input} type="text" name="firstname" required onChange={handleChange} />
 
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Last Name: </label>
-            <input type="text" name="lastname" onChange={(e) => handleChange(e)} />
-            <br/>
-            <br/>
+          <label className={classes.label}>Last Name:</label>
+          <input className={classes.input} type="text" name="lastname" required onChange={handleChange} />
 
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
-            <input type="text" name="campusId" onChange={(e) => handleChange(e)} />
-            <br/>
-            <br/>
+          <label className={classes.label}>Email:</label>
+          <input className={classes.input} type="email" name="email" required onChange={handleChange} />
 
-            <Button variant="contained" color="primary" type="submit">
-              Submit
-            </Button>
-            <br/>
-            <br/>
-          </form>
-          </div>
+          <label className={classes.label}>Image URL:</label>
+          <input className={classes.input} type="text" name="imageUrl" placeholder="(Optional)" onChange={handleChange} />
+
+          <label className={classes.label}>GPA:</label>
+          <input className={classes.input} type="number" name="gpa" min="0.0" max="4.0" step="0.1" placeholder="(Optional)" onChange={handleChange} />
+
+          <label className={classes.label}>Campus Id:</label>
+          <input className={classes.input} type="text" name="campusId" onChange={handleChange} />
+
+          <Button className={classes.buttonSubmit} variant="contained" color="primary" type="submit">
+            Submit
+          </Button>
+        </form>
       </div>
     </div>    
-  )
+  );
 }
 
 export default NewStudentView;

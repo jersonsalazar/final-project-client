@@ -46,13 +46,6 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#d63d68',
     },
   },
-  enrollButton: {
-    backgroundColor: '#50C878',
-    color: '#fff',
-    '&:hover': {
-      backgroundColor: '#3AA55C',
-    },
-  },
   infoText: {
     margin: theme.spacing(2, 0),
     color: '#333',
@@ -137,11 +130,6 @@ const CampusView = (props) => {
           </div>
         ))}
       </div>
-      <Link to="/students" style={{ textDecoration: 'none' }}>
-        <Button className={`${classes.button} ${classes.enrollButton}`}>
-          Enroll Student
-        </Button>
-      </Link>
     </div>
   );
 };
